@@ -409,10 +409,35 @@
   "Write `data` as a single frame of *raw* (uncompressed) blocks.
 
    This is a conformant zstd frame — `zstd -d` and `zstd -t` accept it, which the
-   suite asserts — but it does not compress. There is no zstd encoder here: FSE
-   and Huffman table construction plus a match finder is a second project, and a
-   naive version would be slower and larger than `org-ietf-deflate`'s gzip while
-   introducing a whole class of \"only our decoder reads it\" bugs.
+   suite asserts — but it does not compress. A naive encoder would be slower and
+   larger than `org-ietf-deflate`'s gzip while introducing a whole class of
+   \"only our decoder reads it\" bugs.
+
+   ## What an encoder would actually need (measured 2026-08-30)
+
+   This said \"a second project\" without saying what is in it, which makes it
+   impossible to judge. The decode side already carries more than half:
+
+     have   the predefined FSE distributions (RFC 8878 3.1.1.3.2.2.1) and the
+            literal-length / match-length / offset code tables, in `zstd.fse`
+     have   `fse/build-table`, though it builds a DECODE table — an encoder
+            needs the inverse mapping, symbol to state, which is a different
+            structure from the same distribution
+     have   a match finder pattern to copy: `com-google-snappy` does exactly
+            this job with a hash table over 4-byte sequences
+     need   a REVERSE bit writer. `zstd.bits` has readers only, and the
+            sequences bitstream is written backwards — this is the piece most
+            likely to be silently wrong
+     need   sequence-section assembly and a Compressed_Block header
+
+   Huffman is avoidable: `Raw_Literals_Block` leaves literals uncompressed, so
+   `zstd.huff` needing an encoder too is a second increment, not a prerequisite.
+   That subset — raw literals plus FSE-coded sequences on the predefined tables
+   — is real LZ77 compression and is the smallest thing worth building.
+
+   Not started. `org-ietf-deflate` has a real encoder and `com-google-snappy`
+   now does too, so nothing in this workspace is blocked on it; Parquet
+   deliberately does not offer ZSTD as a codec for exactly this reason.
 
    Options: `:checksum` (default true)."
   ([data] (compress data nil))
