@@ -67,9 +67,9 @@ and long-distance matching beyond what fits in the output buffer.
 ## Test
 
 ```sh
-clojure -M:test          # JVM: portable suite + conformance against the zstd CLI
-nbb run-tests.cljk       # ClojureScript: the same portable suite
-clojure -M:lint
+kbb -M:test          # JVM: portable suite + conformance against the zstd CLI
+kbb --backend sci run-tests.cljk       # ClojureScript: the same portable suite
+kbb -M:lint
 ```
 
 The JVM suite generates every fixture with the reference `zstd` and compares
