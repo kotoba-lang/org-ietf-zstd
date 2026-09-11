@@ -41,7 +41,7 @@ jobs:
         run: clojure -M:lint
 
   cljs:
-    name: nbb run-tests.cljs (ClojureScript)
+    name: nbb run-tests.cljk (ClojureScript)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -51,4 +51,4 @@ jobs:
       - run: npm install -g nbb@1.4.210
       - name: Fetch the pinned sibling checkouts
         run: |
-      - run: nbb run-tests.cljs
+      - run: nbb run-tests.cljk

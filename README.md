@@ -68,7 +68,7 @@ and long-distance matching beyond what fits in the output buffer.
 
 ```sh
 clojure -M:test          # JVM: portable suite + conformance against the zstd CLI
-nbb run-tests.cljs       # ClojureScript: the same portable suite
+nbb run-tests.cljk       # ClojureScript: the same portable suite
 clojure -M:lint
 ```
 

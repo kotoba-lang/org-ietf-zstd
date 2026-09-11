@@ -1,6 +1,6 @@
 (ns zstd.portable-test
   "Runtime-agnostic suite: no shell, no reference binary. Runs under
-   `clojure -M:test` and `nbb run-tests.cljs`.
+   `clojure -M:test` and `nbb run-tests.cljk`.
 
    The decoder cannot be meaningfully tested against itself — our writer emits
    raw blocks, which exercise neither entropy coder — so this suite covers the
