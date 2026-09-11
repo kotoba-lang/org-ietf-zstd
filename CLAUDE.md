@@ -6,12 +6,12 @@ entropy coders and XXH64 are implemented here.
 ## Invariants
 
 - **No host codec.** No `java.util.zip`, no node `zlib.zstd*`, no npm binding.
-  The `zstd` binary appears in `test/zstd/oracle_test.clj` only, as an oracle.
+  The `zstd` binary appears in `test/zstd/oracle_test.cljk` only, as an oracle.
 - **Dictionaries are refused, not guessed at.** A frame with a dictionary ID
   raises `:dictionary-required`.
 - **Checksums verified by default**, `:verify-checksum false` for salvage.
 - **Every failure is an `ex-info` with `:reason`.**
-- **Both runtimes are gated** (`clojure -M:test`, `nbb run-tests.cljs`).
+- **Both runtimes are gated** (`clojure -M:test`, `nbb run-tests.cljk`).
 - **Read the RFC, do not recall it.** Every table in `zstd.fse` is transcribed
   from RFC 8878 §3.1.1.3.2.2 and §4.2. See the first trap below for what
   happens otherwise.
