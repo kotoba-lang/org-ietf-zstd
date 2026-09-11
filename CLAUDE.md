@@ -11,7 +11,7 @@ entropy coders and XXH64 are implemented here.
   raises `:dictionary-required`.
 - **Checksums verified by default**, `:verify-checksum false` for salvage.
 - **Every failure is an `ex-info` with `:reason`.**
-- **Both runtimes are gated** (`clojure -M:test`, `nbb run-tests.cljk`).
+- **Both runtimes are gated** (`kbb -M:test`, `kbb --backend sci run-tests.cljk`).
 - **Read the RFC, do not recall it.** Every table in `zstd.fse` is transcribed
   from RFC 8878 §3.1.1.3.2.2 and §4.2. See the first trap below for what
   happens otherwise.
