@@ -12,7 +12,7 @@
             [zstd.fse :as fse]
             [zstd.huff :as huff]
             [zstd.xxhash :as xxhash]
-            #?(:clj  [clojure.test :refer [deftest is testing]]
+            #?(:clj  [kotoba.test :refer [deftest is testing]]
                :cljs [cljs.test :refer [deftest is testing]])))
 
 (defn- char-code [c] #?(:clj (int c) :cljs (.charCodeAt c 0)))
