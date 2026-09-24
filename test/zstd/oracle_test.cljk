@@ -9,20 +9,19 @@
    input shapes and sizes rather than testing one representative file.
 
    Skipped loudly when `zstd` or python3 is missing rather than passing silently."
-  (:require [clojure.java.io :as io]
+  (:require [kotoba.io :as kio] [clojure.java.io :as io]
             [clojure.java.shell :as shell]
             [kotoba.lang.text :as str]
             [kotoba.test :refer [deftest is testing]]
             [zstd.core :as zstd]
             [zstd.xxhash :as xxhash])
-  (:import [java.io File]
-           [java.nio.file Files]))
+  (:import [java.io File]))
 
 (defn- have? [cmd]
   (try (zero? (:exit (shell/sh cmd "--version"))) (catch Exception _ false)))
 
 (defn- temp-dir []
-  (.toFile (Files/createTempDirectory "org-ietf-zstd-" (make-array java.nio.file.attribute.FileAttribute 0))))
+  (kio/temp-dir "org-ietf-zstd-"))
 
 (defn- rm-rf [^File f] (doseq [c (reverse (file-seq f))] (.delete ^File c)))
 
@@ -32,7 +31,7 @@
       (throw (ex-info (str "command failed: " (pr-str args) "\n" out err) {})))
     out))
 
-(defn- read-ubytes [^File f] (mapv #(bit-and (int %) 0xff) (Files/readAllBytes (.toPath f))))
+(defn- read-ubytes [^File f] (mapv #(bit-and (int %) 0xff) (kio/read-all-bytes f)))
 (defn- write-bytes [^File f bs]
   (with-open [o (io/output-stream f)] (.write o (byte-array (map unchecked-byte bs)))))
 
