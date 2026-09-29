@@ -81,4 +81,4 @@ checksum the reference writes into its own frames.
 
 That breadth is the point. zstd has more independent paths per block than any
 other codec here, and a decoder can be wrong in one while looking healthy in the
-others — three real bugs found this way, all recorded in CLAUDE.md.
+others — three real bugs found this way, all recorded in AGENTS.md.

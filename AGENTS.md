@@ -1,4 +1,4 @@
-# CLAUDE.md — org-ietf-zstd
+# AGENTS.md — org-ietf-zstd
 
 Zstandard decoding (RFC 8878) in portable `.cljc`. Zero dependencies: both
 entropy coders and XXH64 are implemented here.
